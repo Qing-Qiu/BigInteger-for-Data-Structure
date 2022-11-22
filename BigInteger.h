@@ -3,7 +3,8 @@
 
 
 class BigInteger {
-
+public:
+private:
 };
 
 
