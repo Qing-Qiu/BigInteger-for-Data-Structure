@@ -7,11 +7,15 @@ class BigInteger {
 public:
     BigInteger();
 
-    BigInteger(const std::string& str);
+    BigInteger(const std::string &str);
+
+    static int cmp(const BigInteger &a, const BigInteger &b);
+
+    static void swap(BigInteger &a, BigInteger &b);
 
     static BigInteger add(const BigInteger &a, const BigInteger &b);
 
-    static BigInteger sub(const BigInteger &a, const BigInteger &b);
+    static BigInteger sub(BigInteger &a, BigInteger &b);
 
     static BigInteger mul(const BigInteger &a, const BigInteger &b);
 
