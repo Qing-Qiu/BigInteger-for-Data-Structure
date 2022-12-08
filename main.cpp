@@ -25,10 +25,10 @@ int main() {
             cout << "Please type in two big integers in two lines:\n";
             getline(cin, s);
             getline(cin, t);
+            BigInteger a(s), b(t);
             clock_t startTime = clock();
-            /*
-             *
-             */
+            BigInteger res = BigInteger::sub(a, b);
+            res.display();
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "3") {
@@ -36,10 +36,10 @@ int main() {
             cout << "Please type in two big integers in two lines:\n";
             getline(cin, s);
             getline(cin, t);
+            BigInteger a(s), b(t);
             clock_t startTime = clock();
-            /*
-             *
-             */
+            BigInteger res = BigInteger::mul(a, b);
+            res.display();
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "4") {
@@ -47,10 +47,11 @@ int main() {
             cout << "Please type in two big integers in two lines:\n";
             getline(cin, s);
             getline(cin, t);
+            BigInteger a(s), b(t);
             clock_t startTime = clock();
-            /*
-             *
-             */
+            pair<BigInteger, BigInteger> res = BigInteger::div(a, b);
+            res.first.display();
+            res.second.display();
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "5") {
@@ -58,10 +59,10 @@ int main() {
             cout << "Please type in two big integers in two lines:\n";
             getline(cin, s);
             getline(cin, t);
+            BigInteger a(s), b(t);
             clock_t startTime = clock();
-            /*
-             *
-             */
+            BigInteger res = BigInteger::exp(a, b);
+            res.display();
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "0") {

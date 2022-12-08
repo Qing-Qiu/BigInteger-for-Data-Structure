@@ -28,7 +28,7 @@ List::List(const std::string &str) {
     head->next = tail;
     len = 0;
     for (int i = 0; i < std::max(200, (int) str.length()); i++)
-        if (i >= str.length()) push_back(0);
+        if (i >= str.length()) push_front(0);
         else push_back(int(str[i]) - 48);
 }
 
@@ -52,7 +52,7 @@ int List::size() const {
     return len;
 }
 
-bool List::empty() {
+bool List::empty() const {
     if (len == 0)
         return true;
     else
@@ -131,17 +131,16 @@ List &List::operator=(const List &rhs) {
 }
 
 void List::fix() {
-    if (len == 1) return;
-    ListNode *tmp = tail->prev;
-    while (tmp->val == 0) {
-
-    }
 }
 
 void List::display() {
+    bool flag = false;
     ListNode *tmp = head->next;
     while (tmp != tail) {
-        std::cout << tmp->val << ' ';
+        if (tmp->val > 0)
+            flag = true;
+        if (flag || tmp->next == tail)
+            std::cout << tmp->val;
         tmp = tmp->next;
     }
     std::cout << std::endl;

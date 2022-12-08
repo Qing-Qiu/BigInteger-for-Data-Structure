@@ -20,7 +20,7 @@ public:
 
     int size() const;
 
-    bool empty();
+    bool empty() const;
 
     void push_front(const int &);
 
@@ -39,6 +39,8 @@ public:
     void fix();
 
     void display();
+
+    friend class BigInteger;
 
 private:
     class ListNode {

@@ -7,7 +7,7 @@ class BigInteger {
 public:
     BigInteger();
 
-    BigInteger(std::string str);
+    BigInteger(const std::string& str);
 
     static BigInteger add(const BigInteger &a, const BigInteger &b);
 

@@ -6,19 +6,20 @@
 BigInteger::BigInteger() : data() {
 }
 
-BigInteger::BigInteger(std::string str) {
+BigInteger::BigInteger(const std::string &str) {
     data = *new List(str);
 }
 
 BigInteger BigInteger::add(const BigInteger &a, const BigInteger &b) {
     BigInteger res = *new BigInteger();
     int carry = 0;
-    if (a.data.size() < b.data.size()) {
-
-    } else {
-
+    auto h1 = a.data.tail->prev, h2 = b.data.tail->prev;
+    for (int i = 0; i < a.data.size(); i++) {
+        res.data.push_front((h1->val + h2->val + carry) % 10);
+        carry = (h1->val + h2->val + carry) / 10;
+        h1 = h1->prev, h2 = h2->prev;
     }
-    return a;
+    return res;
 }
 
 BigInteger BigInteger::sub(const BigInteger &a, const BigInteger &b) {
