@@ -1,15 +1,74 @@
-#include "List.h"
 #include "BigInteger.h"
-#include<time.h>
+#include <ctime>
 
 using namespace std;
 
 int main() {
-    clock_t startTime = clock();
-    /*
-     *
-     */
-    clock_t endTime = clock();
-    cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+    while (true) {
+        cout << "Please enter the operation method you select:\n1.addition\n2.subtraction\n3.multiplication\n"
+                "4.division\n5.exponentiation\n0.EXIT\n";
+        string opt;
+        getline(cin, opt);
+        if (opt == "1") {
+            string s, t;
+            cout << "Please type in two big integers in two lines:\n";
+            getline(cin, s);
+            getline(cin, t);
+            BigInteger a(s), b(t);
+            clock_t startTime = clock();
+            BigInteger res = BigInteger::add(a, b);
+            res.display();
+            clock_t endTime = clock();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+        } else if (opt == "2") {
+            string s, t;
+            cout << "Please type in two big integers in two lines:\n";
+            getline(cin, s);
+            getline(cin, t);
+            clock_t startTime = clock();
+            /*
+             *
+             */
+            clock_t endTime = clock();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+        } else if (opt == "3") {
+            string s, t;
+            cout << "Please type in two big integers in two lines:\n";
+            getline(cin, s);
+            getline(cin, t);
+            clock_t startTime = clock();
+            /*
+             *
+             */
+            clock_t endTime = clock();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+        } else if (opt == "4") {
+            string s, t;
+            cout << "Please type in two big integers in two lines:\n";
+            getline(cin, s);
+            getline(cin, t);
+            clock_t startTime = clock();
+            /*
+             *
+             */
+            clock_t endTime = clock();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+        } else if (opt == "5") {
+            string s, t;
+            cout << "Please type in two big integers in two lines:\n";
+            getline(cin, s);
+            getline(cin, t);
+            clock_t startTime = clock();
+            /*
+             *
+             */
+            clock_t endTime = clock();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+        } else if (opt == "0") {
+            break;
+        } else {
+            cout << "请重新输入!\n";
+        }
+    }
     return 0;
 }

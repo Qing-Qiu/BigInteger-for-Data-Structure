@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(BigInteger_for_Data_Structure
-        List.h BigInteger.h main.cpp)
+        List.h BigInteger.h List.cpp BigInteger.cpp main.cpp)
