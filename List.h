@@ -1,6 +1,8 @@
 #ifndef BIGINTEGER_FOR_DATA_STRUCTURE_LIST_H
 #define BIGINTEGER_FOR_DATA_STRUCTURE_LIST_H
 
+#include<iostream>
+
 template<typename T>
 class List {
 public:
@@ -30,9 +32,7 @@ public:
 
     void remove(const T &);
 
-    const List<T> &operator=(const List<T> &);
-
-    T &operator[](const int);
+    List<T> &operator=(const List<T> &);
 
     void display();
 
@@ -40,7 +40,7 @@ private:
     class ListNode {
     public:
         T val;
-        ListNode *prev, next;
+        ListNode *prev, *next;
 
         ListNode(const T &v) : val(v), next(nullptr), prev(nullptr) {}
 
@@ -56,6 +56,20 @@ template<typename T>
 List<T>::List() : head(new ListNode()), tail(new ListNode()), len(0) {
     tail->prev = head;
     head->next = tail;
+}
+
+template<typename T>
+List<T>::List(const List<T> &rhs) {
+    head = new ListNode();
+    tail = new ListNode();
+    tail->prev = head;
+    head->prev = tail;
+    len = 0;
+    ListNode *tmp = rhs.head->next;
+    while (tmp != rhs.tail) {
+        push_back(tmp->val);
+        tmp = tmp->next;
+    }
 }
 
 template<typename T>
@@ -92,7 +106,7 @@ bool List<T>::empty() {
 
 template<typename T>
 void List<T>::push_front(const T &elem) {
-    ListNode *tmp = new ListNode(elem);
+    auto *tmp = new ListNode(elem);
     tmp->prev = head;
     head->next->prev = tmp;
     tmp->next = head->next;
@@ -102,7 +116,7 @@ void List<T>::push_front(const T &elem) {
 
 template<typename T>
 void List<T>::push_back(const T &elem) {
-    ListNode *tmp = new ListNode(elem);
+    auto *tmp = new ListNode(elem);
     tmp->next = tail;
     tail->prev->next = tmp;
     tmp->prev = tail->prev;
@@ -150,7 +164,6 @@ void List<T>::remove(const T &elem) {
             tmp->next->prev = tmp->prev;
             tmp = tmp->next;
             delete p;
-            p = nullptr;
             len--;
         } else
             tmp = tmp->next;
@@ -158,16 +171,25 @@ void List<T>::remove(const T &elem) {
 }
 
 template<typename T>
-const List<T> &List<T>::operator=(const List<T> &rhs) {
-
-}
-
-template<typename T>
-T &List<T>::operator[](const int index) {
+List<T> &List<T>::operator=(const List<T> &rhs) {
+    if (this == &rhs) return *this;
+    clear();
+    ListNode *tmp = rhs.head->next;
+    while (tmp != rhs.tail) {
+        push_back(tmp->val);
+        tmp = tmp->next;
+    }
+    return *this;
 }
 
 template<typename T>
 void List<T>::display() {
+    ListNode *tmp = head->next;
+    while (tmp != tail) {
+        std::cout << tmp->val << ' ';
+        tmp = tmp->next;
+    }
+    std::cout << std::endl;
 }
 
 #endif //BIGINTEGER_FOR_DATA_STRUCTURE_LIST_H
