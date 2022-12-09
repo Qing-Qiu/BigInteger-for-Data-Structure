@@ -21,7 +21,9 @@ public:
 
     static std::pair<BigInteger, BigInteger> div(const BigInteger &a, const BigInteger &b);
 
-    static BigInteger exp(const BigInteger &a, const BigInteger &b);
+    static BigInteger exp(BigInteger &a, BigInteger &b);
+
+    static bool isZero(BigInteger &a);
 
     void display();
 

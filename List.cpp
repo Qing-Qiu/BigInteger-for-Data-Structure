@@ -3,6 +3,8 @@
 
 #include "List.h"
 
+#define MAX_LEN 200
+
 List::List() : head(new ListNode()), tail(new ListNode()), len(0) {
     tail->prev = head;
     head->next = tail;
@@ -27,7 +29,7 @@ List::List(const std::string &str) {
     tail->prev = head;
     head->next = tail;
     len = 0;
-    for (int i = 0; i < std::max(200, (int) str.length()); i++)
+    for (int i = 0; i < std::max(MAX_LEN, (int) str.length()); i++)
         if (i >= str.length()) push_front(0);
         else push_back(int(str[i]) - 48);
 }
