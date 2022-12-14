@@ -129,6 +129,7 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
 BigInteger BigInteger::exp(BigInteger &a, BigInteger &b) {
     BigInteger res = *new BigInteger();
     BigInteger two = *new BigInteger();
+    res.data.push_back(1);
     two.data.push_back(2);
     while (!isZero(b)) {
         if (b.data.tail->prev->val & 1) res = mul(res, a);
