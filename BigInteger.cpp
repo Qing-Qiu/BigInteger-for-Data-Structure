@@ -88,9 +88,9 @@ BigInteger BigInteger::mul(const BigInteger &a, const BigInteger &b) {
 }
 
 std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const BigInteger &b) {
-    BigInteger quo = *new BigInteger();
-    BigInteger rem = *new BigInteger(a);
-    BigInteger tmp = *new BigInteger(b);
+    BigInteger quo = *new BigInteger(); //商
+    BigInteger rem = *new BigInteger(a); //余数
+    BigInteger tmp = *new BigInteger(b); //除数辅助变量
     int lenA = a.data.size(), lenB = b.data.size();
     auto p1 = a.data.head->next, p2 = b.data.head->next;
     auto p = rem.data.head->next;
@@ -99,71 +99,26 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
         if (p1->val > 0 || lenA == 1) break;
         p1 = p1->next;
         p = p->next;
-        lenA--;
-    }
+        rem.data.pop_front();
+    }   //被除数（余数）去除前面的0
     for (int i = 0; i < b.data.size(); i++) {
         if (p2->val > 0 || lenB == 1) break;
         p2 = p2->next;
         q = q->next;
-        lenB--;
-    }
-    //商最多有lenA-lenB+1位
-    for (int i = 0; i < lenA - lenB + 1; i++)
+        tmp.data.pop_front();
+    }   //除数去除前面的0
+    for (int i = 0; i < rem.data.size() - tmp.data.size(); i++)
+        tmp.data.push_back(0);
+    //填充除数后面的0
+    for (int i = 0; i < rem.data.size() - tmp.data.size() + 1; i++)
         quo.data.push_back(0);
+    //商最多有lenA-lenB+1位
     auto baseA = p1, baseB = p2;
     auto baseC = p, baseD = quo.data.head->next;
-    //p1 被除数的第一个位置
-    //p2 除数的第一个位置
-    //p 余数的第一个位置
-    //q 商的第一个位置
-//    for (int i = 0; i < quo.data.size(); i++) {
-//        //能不能减
-//        while (true) {
-//            int flag = 0;
-//            if (false) flag = 1;
-//            else {
-//                auto pd = baseD, pb = baseB;
-//                for (int j = 0; j < i; j++) pd = pd->next;
-//                for (int j = 0; j < lenB; j++) {
-//                    if (pd->val > pb->val) {
-//                        flag = 1;
-//                        break;
-//                    }
-//                    if (pd->val < pb->val) {
-//                        flag = -1;
-//                        break;
-//                    }
-//                    pb = pb->next;
-//                    pd = pd->next;
-//                }
-//            }
-//            if (flag != -1) {
-//                auto pb = baseB, pd = baseD;
-//                for (int j = 0; j < lenB; j++) {
-//                    pb = pb->next;
-//                    pd = pd->next;
-//                }
-//                for (int j = 0; j < lenB; j++) {
-//                    pd->val -= pb->val;
-//                    if (pd->val < 0) {
-//                        pd->val += 10;
-//                        pd->prev->val--;
-//                    }
-//                    pb = pb->prev, pd = pd->prev;
-//                }
-//                baseC->val++;
-//            } else break;
-//        }
-//        baseC = baseC->next;
-//        baseD = baseD->next;
-//    }
-    for (int i = 0; i < lenA - lenB; i++)
-        tmp.data.push_back(0);
-    tmp.data.display();
-    for (int i = 0; i < rem.data.size(); i++) {
+    for (int i = 0; i < quo.data.size(); i++) {
         while (true) {
             int flag = 0;
-            auto pa = q,
+            auto pa = tmp.data.head->next,
                     pb = baseD;
             for (int j = 0; j < lenA - i + 1; j++) {
                 if (pa->val > pb->val) {
@@ -177,12 +132,15 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
                 pa = pa->next;
                 pb = pb->next;
             }
+            rem.data.displayAll();
+            tmp.data.displayAll();
             if (flag == -1) break;
             rem = sub(rem, tmp).second;
             rem.data.display();
             baseC->val++;
         }
         tmp.data.pop_back();
+        tmp.data.displayAll();
         baseC = baseC->next;
         baseD = baseD->next;
     }
