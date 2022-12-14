@@ -56,6 +56,7 @@ std::pair<char, BigInteger> BigInteger::sub(BigInteger &a, BigInteger &b) {
         borrow = (p1->val - borrow >= p2->val ? 0 : 1);
         p1 = p1->prev, p2 = p2->prev;
     }
+    if (sgn == '-') swap(a, b);
     return {sgn, res};
 }
 
@@ -88,61 +89,41 @@ BigInteger BigInteger::mul(const BigInteger &a, const BigInteger &b) {
 }
 
 std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const BigInteger &b) {
-    BigInteger quo = *new BigInteger(); //商
     BigInteger rem = *new BigInteger(a); //余数
     BigInteger tmp = *new BigInteger(b); //除数辅助变量
-    int lenA = a.data.size(), lenB = b.data.size();
-    auto p1 = a.data.head->next, p2 = b.data.head->next;
+    BigInteger quo = *new BigInteger(); //商
     auto p = rem.data.head->next;
     auto q = tmp.data.head->next;
     for (int i = 0; i < a.data.size(); i++) {
-        if (p1->val > 0 || lenA == 1) break;
-        p1 = p1->next;
+        if (p->val > 0 || rem.data.size() == 1) break;
         p = p->next;
         rem.data.pop_front();
     }   //被除数（余数）去除前面的0
     for (int i = 0; i < b.data.size(); i++) {
-        if (p2->val > 0 || lenB == 1) break;
-        p2 = p2->next;
+        if (q->val > 0 || tmp.data.size() == 1) break;
         q = q->next;
         tmp.data.pop_front();
     }   //除数去除前面的0
+    int d = rem.data.size() - tmp.data.size();
+    //记录第几位开始
     for (int i = 0; i < rem.data.size() - tmp.data.size(); i++)
         tmp.data.push_back(0);
-    //填充除数后面的0
-    for (int i = 0; i < rem.data.size() - tmp.data.size() + 1; i++)
+    //填充除数后面的0，使之跟被除数相同
+    for (int i = 0; i < rem.data.size(); i++)
         quo.data.push_back(0);
-    //商最多有lenA-lenB+1位
-    auto baseA = p1, baseB = p2;
-    auto baseC = p, baseD = quo.data.head->next;
+    //商最多有lenA-lenB+1位，先预占和被除数相同的位数
+    auto pt = quo.data.head->next;
     for (int i = 0; i < quo.data.size(); i++) {
         while (true) {
-            int flag = 0;
-            auto pa = tmp.data.head->next,
-                    pb = baseD;
-            for (int j = 0; j < lenA - i + 1; j++) {
-                if (pa->val > pb->val) {
-                    flag = -1;
-                    break;
-                }
-                if (pa->val < pb->val) {
-                    flag = 1;
-                    break;
-                }
-                pa = pa->next;
-                pb = pb->next;
-            }
-            rem.data.displayAll();
-            tmp.data.displayAll();
-            if (flag == -1) break;
-            rem = sub(rem, tmp).second;
-            rem.data.display();
-            baseC->val++;
+            auto res = sub(rem, tmp);
+            if (res.first == '+') {
+                rem = *new BigInteger(res.second);
+                pt->val++;
+            } else break;
         }
         tmp.data.pop_back();
-        tmp.data.displayAll();
-        baseC = baseC->next;
-        baseD = baseD->next;
+        tmp.data.push_front(0);
+        pt = pt->next;
     }
     return {quo, rem};
 }
