@@ -43,11 +43,12 @@ BigInteger BigInteger::add(const BigInteger &a, const BigInteger &b) {
 }
 
 std::pair<char, BigInteger> BigInteger::sub(BigInteger &a, BigInteger &b) {
-    char sgn = '+';
-    if (cmp(a, b) == -1) {
+    char sgn;
+    int comp = cmp(a, b);
+    if (comp == -1) {
         swap(a, b);
         sgn = '-';
-    }
+    } else sgn = '+';
     BigInteger res = *new BigInteger();
     int borrow = 0;
     auto p1 = a.data.tail->prev, p2 = b.data.tail->prev;
@@ -105,25 +106,22 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
         tmp.data.pop_front();
     }   //除数去除前面的0
     int d = rem.data.size() - tmp.data.size();
-    //记录第几位开始
-    for (int i = 0; i < rem.data.size() - tmp.data.size(); i++)
+    for (int i = 0; i < d; i++)
         tmp.data.push_back(0);
     //填充除数后面的0，使之跟被除数相同
-    for (int i = 0; i < rem.data.size(); i++)
-        quo.data.push_back(0);
-    //商最多有lenA-lenB+1位，先预占和被除数相同的位数
-    auto pt = quo.data.head->next;
-    for (int i = 0; i < quo.data.size(); i++) {
+    d = rem.data.size();
+    for (int i = 0; i < d; i++) {
+        int val = 0;
         while (true) {
             auto res = sub(rem, tmp);
             if (res.first == '+') {
                 rem = *new BigInteger(res.second);
-                pt->val++;
+                val++;
             } else break;
         }
         tmp.data.pop_back();
         tmp.data.push_front(0);
-        pt = pt->next;
+        quo.data.push_back(val);
     }
     return {quo, rem};
 }
