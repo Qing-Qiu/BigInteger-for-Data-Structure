@@ -40,6 +40,8 @@ public:
 
     void display();
 
+    void displayAll();
+
     friend class BigInteger;
 
 private:

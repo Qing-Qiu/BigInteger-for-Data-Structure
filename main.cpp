@@ -27,8 +27,9 @@ int main() {
             getline(cin, t);
             BigInteger a(s), b(t);
             clock_t startTime = clock();
-            BigInteger res = BigInteger::sub(a, b);
-            res.display();
+            auto res = BigInteger::sub(a, b);
+            if (res.first == '-') cout << '-';
+            res.second.display();
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "3") {
@@ -49,9 +50,13 @@ int main() {
             getline(cin, t);
             BigInteger a(s), b(t);
             clock_t startTime = clock();
-            pair<BigInteger, BigInteger> res = BigInteger::div(a, b);
-            res.first.display();
-            res.second.display();
+            if (BigInteger::isZero(b)) {
+                cout << "Error: Divide by 0\n";
+            } else {
+                pair<BigInteger, BigInteger> res = BigInteger::div(a, b);
+                res.first.display();
+                res.second.display();
+            }
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "5") {
@@ -61,8 +66,12 @@ int main() {
             getline(cin, t);
             BigInteger a(s), b(t);
             clock_t startTime = clock();
-            BigInteger res = BigInteger::exp(a, b);
-            res.display();
+            if (BigInteger::isZero(a) && BigInteger::isZero(b)) {
+                cout << "Error: 0 ^ 0 undefined\n";
+            } else {
+                BigInteger res = BigInteger::exp(a, b);
+                res.display();
+            }
             clock_t endTime = clock();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "0") {

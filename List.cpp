@@ -148,4 +148,13 @@ void List::display() {
     std::cout << std::endl;
 }
 
+void List::displayAll() {
+    ListNode *tmp = head->next;
+    while (tmp != tail) {
+        std::cout << tmp->val;
+        tmp = tmp->next;
+    }
+    std::cout << std::endl;
+}
+
 #endif //BIGINTEGER_FOR_DATA_STRUCTURE_LIST_CPP

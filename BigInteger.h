@@ -15,7 +15,7 @@ public:
 
     static BigInteger add(const BigInteger &a, const BigInteger &b);
 
-    static BigInteger sub(BigInteger &a, BigInteger &b);
+    static std::pair<char,BigInteger> sub(BigInteger &a, BigInteger &b);
 
     static BigInteger mul(const BigInteger &a, const BigInteger &b);
 
@@ -26,6 +26,8 @@ public:
     static bool isZero(BigInteger &a);
 
     void display();
+
+    void displayAll();
 
 private:
     List data;
