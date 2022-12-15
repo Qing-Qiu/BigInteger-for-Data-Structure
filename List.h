@@ -36,11 +36,13 @@ public:
 
     List &operator=(const List &);
 
-    void fix();
+    void displayLen(std::string);
 
     void display();
 
     void displayAll();
+
+    void fileDisplay();
 
     friend class BigInteger;
 

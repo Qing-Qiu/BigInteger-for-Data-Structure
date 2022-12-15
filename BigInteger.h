@@ -15,7 +15,7 @@ public:
 
     static BigInteger add(const BigInteger &a, const BigInteger &b);
 
-    static std::pair<char,BigInteger> sub(BigInteger &a, BigInteger &b);
+    static std::pair<char, BigInteger> sub(BigInteger &a, BigInteger &b);
 
     static BigInteger mul(const BigInteger &a, const BigInteger &b);
 
@@ -28,6 +28,10 @@ public:
     void display();
 
     void displayAll();
+
+    void fileDisplay();
+
+    void displayLen(std::string);
 
 private:
     List data;

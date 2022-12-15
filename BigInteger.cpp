@@ -109,8 +109,7 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
     for (int i = 0; i < d; i++)
         tmp.data.push_back(0);
     //填充除数后面的0，使之跟被除数相同
-    d = rem.data.size();
-    for (int i = 0; i < d; i++) {
+    for (int i = 0; i < d + 1; i++) {
         int val = 0;
         while (true) {
             auto res = sub(rem, tmp);
@@ -154,6 +153,14 @@ void BigInteger::display() {
 
 void BigInteger::displayAll() {
     data.displayAll();
+}
+
+void BigInteger::fileDisplay() {
+    data.fileDisplay();
+}
+
+void BigInteger::displayLen(std::string io) {
+    data.displayLen(io);
 }
 
 #endif //BIGINTEGER_FOR_DATA_STRUCTURE_BIGINTEGER_CPP

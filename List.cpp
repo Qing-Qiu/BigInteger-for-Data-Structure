@@ -2,6 +2,7 @@
 #define BIGINTEGER_FOR_DATA_STRUCTURE_LIST_CPP
 
 #include "List.h"
+#include <fstream>
 
 #define MAX_LEN 200
 
@@ -132,7 +133,23 @@ List &List::operator=(const List &rhs) {
     return *this;
 }
 
-void List::fix() {
+void List::displayLen(std::string io) {
+    bool flag = false;
+    int length = 0;
+    ListNode *tmp = head->next;
+    while (tmp != tail) {
+        if (tmp->val > 0)
+            flag = true;
+        if (flag || tmp->next == tail)
+            length++;
+        tmp = tmp->next;
+    }
+    if (io == "1")
+        std::cout << "length = " << length << std::endl;
+    else {
+        std::ofstream out("../out.txt");
+        out << "length = " << length << '\n';
+    }
 }
 
 void List::display() {
@@ -155,6 +172,20 @@ void List::displayAll() {
         tmp = tmp->next;
     }
     std::cout << std::endl;
+}
+
+void List::fileDisplay() {
+    std::ofstream out("../out.txt");
+    bool flag = false;
+    ListNode *tmp = head->next;
+    while (tmp != tail) {
+        if (tmp->val > 0)
+            flag = true;
+        if (flag || tmp->next == tail)
+            out << tmp->val;
+        tmp = tmp->next;
+    }
+    out << '\n';
 }
 
 #endif //BIGINTEGER_FOR_DATA_STRUCTURE_LIST_CPP
