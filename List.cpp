@@ -147,8 +147,9 @@ void List::displayLen(std::string io) {
     if (io == "1")
         std::cout << "length = " << length << std::endl;
     else {
-        std::ofstream out("../out.txt");
+        std::ofstream out("../out.txt", std::ios::app);
         out << "length = " << length << '\n';
+        out.close();
     }
 }
 
@@ -175,7 +176,7 @@ void List::displayAll() {
 }
 
 void List::fileDisplay() {
-    std::ofstream out("../out.txt");
+    std::ofstream out("../out.txt", std::ios::app);
     bool flag = false;
     ListNode *tmp = head->next;
     while (tmp != tail) {
@@ -186,6 +187,7 @@ void List::fileDisplay() {
         tmp = tmp->next;
     }
     out << '\n';
+    out.close();
 }
 
 #endif //BIGINTEGER_FOR_DATA_STRUCTURE_LIST_CPP

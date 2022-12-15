@@ -4,7 +4,13 @@
 
 using namespace std;
 
+void init() {
+    ofstream out("../out.txt", ios::ate);
+    out.close();
+}
+
 int main() {
+    init();
     while (true) {
         cout << "Please select your input method:\npress 1: keyboard\notherwise: file\n";
         string io;
@@ -23,6 +29,7 @@ int main() {
                 ifstream in("../in.txt");
                 getline(in, s);
                 getline(in, t);
+                in.close();
             }
             BigInteger a(s), b(t);
             clock_t startTime = clock();
@@ -43,19 +50,21 @@ int main() {
                 ifstream in("../in.txt");
                 getline(in, s);
                 getline(in, t);
+                in.close();
             }
             BigInteger a(s), b(t);
             clock_t startTime = clock();
             auto res = BigInteger::sub(a, b);
             clock_t endTime = clock();
+            res.second.displayLen(io);
             if (res.first == '-') {
                 if (io == "1") cout << '-';
                 else {
-                    ofstream out("../out.txt");
+                    ofstream out("../out.txt", ios::app);
                     out << '-';
+                    out.close();
                 }
             }
-            res.second.displayLen(io);
             if (io == "1")
                 res.second.display();
             else res.second.fileDisplay();
@@ -70,11 +79,13 @@ int main() {
                 ifstream in("../in.txt");
                 getline(in, s);
                 getline(in, t);
+                in.close();
             }
             BigInteger a(s), b(t);
             clock_t startTime = clock();
             BigInteger res = BigInteger::mul(a, b);
             clock_t endTime = clock();
+            res.displayLen(io);
             if (io == "1")
                 res.display();
             else res.fileDisplay();
@@ -89,6 +100,7 @@ int main() {
                 ifstream in("../in.txt");
                 getline(in, s);
                 getline(in, t);
+                in.close();
             }
             BigInteger a(s), b(t);
             if (BigInteger::isZero(b)) {
@@ -98,9 +110,14 @@ int main() {
                 clock_t startTime = clock();
                 pair<BigInteger, BigInteger> res = BigInteger::div(a, b);
                 clock_t endTime = clock();
+                res.first.displayLen(io);
                 if (io == "1")
-                    res.first.display(), res.second.display();
-                else res.first.fileDisplay(), res.second.fileDisplay();
+                    res.first.display();
+                else res.first.fileDisplay();
+                res.second.displayLen(io);
+                if (io == "1")
+                    res.second.display();
+                else res.second.fileDisplay();
                 cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
             }
         } else if (opt == "5") {
@@ -113,6 +130,7 @@ int main() {
                 ifstream in("../in.txt");
                 getline(in, s);
                 getline(in, t);
+                in.close();
             }
             BigInteger a(s), b(t);
             if (BigInteger::isZero(a) && BigInteger::isZero(b)) {
@@ -123,6 +141,7 @@ int main() {
                 BigInteger res = BigInteger::exp(a, b);
                 clock_t endTime = clock();
                 cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+                res.displayLen(io);
                 if (io == "1")
                     res.display();
                 else res.fileDisplay();
