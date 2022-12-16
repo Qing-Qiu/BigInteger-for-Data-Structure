@@ -125,6 +125,22 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
     return {quo, rem};
 }
 
+BigInteger BigInteger::div2(BigInteger &a) {
+    BigInteger res = *new BigInteger();
+    auto p = a.data.head->next;
+    int r = 0;
+    bool flag = false;
+    for (int i = 0; i < a.data.size(); i++) {
+        r = r * 10 + p->val;
+        if (r / 2 > 0 || i == a.data.size() - 1) flag = true;
+        p = p->next;
+        if (!flag) continue;
+        res.data.push_back(r / 2);
+        r %= 2;
+    }
+    return res;
+}
+
 BigInteger BigInteger::exp(BigInteger &a, BigInteger &b) {
     BigInteger res = *new BigInteger();
     BigInteger two = *new BigInteger();
@@ -133,7 +149,8 @@ BigInteger BigInteger::exp(BigInteger &a, BigInteger &b) {
     while (!isZero(b)) {
         if (b.data.tail->prev->val & 1) res = mul(res, a);
         a = mul(a, a);
-        b = div(b, two).first;
+        b = div2(b);
+//        b = div(b, two).first;
     }
     return res;
 }

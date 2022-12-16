@@ -4,7 +4,7 @@
 #include "List.h"
 #include <fstream>
 
-#define MAX_LEN 200
+#define MAX_LEN 0
 
 List::List() : head(new ListNode()), tail(new ListNode()), len(0) {
     tail->prev = head;

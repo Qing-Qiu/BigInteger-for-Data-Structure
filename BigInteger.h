@@ -21,6 +21,8 @@ public:
 
     static std::pair<BigInteger, BigInteger> div(const BigInteger &a, const BigInteger &b);
 
+    static BigInteger div2(BigInteger &a);
+
     static BigInteger exp(BigInteger &a, BigInteger &b);
 
     static bool isZero(BigInteger &a);
