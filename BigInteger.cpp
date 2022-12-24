@@ -44,6 +44,7 @@ BigInteger BigInteger::add(BigInteger &a, BigInteger &b) {
         carry = (p1->val + p2->val + carry) / 10;
         p1 = p1->prev, p2 = p2->prev;
     }
+    if (carry > 0) res.data.push_front(carry);
     return res;
 }
 
@@ -125,7 +126,7 @@ BigInteger BigInteger::exmul(const BigInteger &a, const BigInteger &b) {
     while ((1 << bit) < n + m + 1) bit++;
     tot = 1 << bit;
     for (int i = 0; i < tot; i++)
-        rev[i] = ((rev[i >> 1] >> 1)) | ((i & 1) << (bit - 1));
+        rev[i] = ((rev[i >> 1] >> 1)) | ((i & 1) << (bit - 1)); //比特逆序
     FFT(Ca, 1), FFT(Cb, 1);
     for (int i = 0; i < tot; i++) Ca[i] = Ca[i] * Cb[i];
     FFT(Ca, -1);
