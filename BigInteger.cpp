@@ -89,6 +89,66 @@ BigInteger BigInteger::mul(const BigInteger &a, const BigInteger &b) {
     return res;
 }
 
+int arr[300010];
+int rev[300010], bit, tot;
+Complex Ca[300010], Cb[300010];
+
+BigInteger BigInteger::exmul(const BigInteger &a, const BigInteger &b) {
+    BigInteger res = *new BigInteger();
+    memset(arr, 0, sizeof arr);
+    memset(rev, 0, sizeof rev);
+    memset(Ca, 0, sizeof Ca);
+    memset(Cb, 0, sizeof Cb);
+    auto p1 = a.data.tail->prev;
+    auto p2 = b.data.tail->prev;
+    int n = 0, m = 0;
+    while (p1 != a.data.head) {
+        Ca[n++].x = p1->val;
+        p1 = p1->prev;
+    }
+    while (p2 != b.data.head) {
+        Cb[m++].x = p2->val;
+        p2 = p2->prev;
+    }
+    n--, m--;
+    bit = 0;
+    while ((1 << bit) < n + m + 1) bit++;
+    tot = 1 << bit;
+    for (int i = 0; i < tot; i++)
+        rev[i] = ((rev[i >> 1] >> 1)) | ((i & 1) << (bit - 1));
+    FFT(Ca, 1), FFT(Cb, 1);
+    for (int i = 0; i < tot; i++) Ca[i] = Ca[i] * Cb[i];
+    FFT(Ca, -1);
+    int k = 0;
+    for (int i = 0, t = 0; i < tot || t; i++) {
+        t = t + (int) (Ca[i].x / tot + 0.5);
+        arr[k++] = t % 10;
+        t /= 10;
+    }
+    while (k > 1 && !arr[k - 1]) k--;
+    for (int i = k - 1; i >= 0; i--)
+        res.data.push_back(arr[i]);
+    return res;
+}
+
+const double PI = acos(-1);
+
+void BigInteger::FFT(Complex para[], int inv) {
+    for (int i = 0; i < tot; i++)
+        if (i < rev[i])
+            std::swap(para[i], para[rev[i]]);
+    for (int mid = 1; mid < tot; mid *= 2) {
+        auto w1 = Complex({cos(PI / mid), inv * sin(PI / mid)});
+        for (int i = 0; i < tot; i += mid * 2) {
+            auto wk = Complex({1, 0});
+            for (int j = 0; j < mid; j++, wk = wk * w1) {
+                auto x = para[i + j], y = wk * para[i + j + mid];
+                para[i + j] = x + y, para[i + j + mid] = x - y;
+            }
+        }
+    }
+}
+
 std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const BigInteger &b) {
     BigInteger rem = *new BigInteger(a); //余数
     BigInteger tmp = *new BigInteger(b); //除数辅助变量
@@ -149,8 +209,18 @@ BigInteger BigInteger::exp(BigInteger &a, BigInteger &b) {
     while (!isZero(b)) {
         if (b.data.tail->prev->val & 1) res = mul(res, a);
         a = mul(a, a);
+        b = div(b, two).first;
+    }
+    return res;
+}
+
+BigInteger BigInteger::exexp(BigInteger &a, BigInteger &b) {
+    BigInteger res = *new BigInteger();
+    res.data.push_back(1);
+    while (!isZero(b)) {
+        if (b.data.tail->prev->val & 1) res = exmul(res, a);
+        a = exmul(a, a);
         b = div2(b);
-//        b = div(b, two).first;
     }
     return res;
 }

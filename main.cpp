@@ -90,6 +90,14 @@ int main() {
                 res.display();
             else res.fileDisplay();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+            startTime = clock();
+            res = BigInteger::exmul(a, b);
+            endTime = clock();
+            res.displayLen(io);
+            if (io == "1")
+                res.display();
+            else res.fileDisplay();
+            cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
         } else if (opt == "4") {
             string s, t;
             if (io == "1") {
@@ -132,7 +140,7 @@ int main() {
                 getline(in, t);
                 in.close();
             }
-            BigInteger a(s), b(t);
+            BigInteger a(s), b(t), c(s), d(t);
             if (BigInteger::isZero(a) && BigInteger::isZero(b)) {
                 cerr << "Error: 0 ^ 0 undefined\n";
                 continue;
@@ -140,6 +148,14 @@ int main() {
                 clock_t startTime = clock();
                 BigInteger res = BigInteger::exp(a, b);
                 clock_t endTime = clock();
+                cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
+                res.displayLen(io);
+                if (io == "1")
+                    res.display();
+                else res.fileDisplay();
+                startTime = clock();
+                res = BigInteger::exexp(c, d);
+                endTime = clock();
                 cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
                 res.displayLen(io);
                 if (io == "1")

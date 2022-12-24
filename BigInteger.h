@@ -2,6 +2,24 @@
 #define BIGINTEGER_FOR_DATA_STRUCTURE_BIGINTEGER_H
 
 #include "List.h"
+#include <cmath>
+#include <cstring>
+
+struct Complex {
+    double x, y;
+
+    Complex operator+(const Complex &t) const {
+        return {x + t.x, y + t.y};
+    }
+
+    Complex operator-(const Complex &t) const {
+        return {x - t.x, y - t.y};
+    }
+
+    Complex operator*(const Complex &t) const {
+        return {x * t.x - y * t.y, x * t.y + y * t.x};
+    }
+};
 
 class BigInteger {
 public:
@@ -19,11 +37,17 @@ public:
 
     static BigInteger mul(const BigInteger &a, const BigInteger &b);
 
+    static BigInteger exmul(const BigInteger &a, const BigInteger &b);
+
+    static void FFT(Complex para[], int);
+
     static std::pair<BigInteger, BigInteger> div(const BigInteger &a, const BigInteger &b);
 
     static BigInteger div2(BigInteger &a);
 
     static BigInteger exp(BigInteger &a, BigInteger &b);
+
+    static BigInteger exexp(BigInteger &a, BigInteger &b);
 
     static bool isZero(BigInteger &a);
 
