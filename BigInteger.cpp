@@ -192,6 +192,7 @@ std::pair<BigInteger, BigInteger> BigInteger::div(const BigInteger &a, const Big
         tmp.data.push_front(0);
         quo.data.push_back(val);
     }
+    if (quo.data.empty()) quo.data.push_back(0);
     return {quo, rem};
 }
 
