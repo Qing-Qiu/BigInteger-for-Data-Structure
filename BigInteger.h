@@ -31,7 +31,7 @@ public:
 
     static void swap(BigInteger &a, BigInteger &b);
 
-    static BigInteger add(const BigInteger &a, const BigInteger &b);
+    static BigInteger add(BigInteger &a, BigInteger &b);
 
     static std::pair<char, BigInteger> sub(BigInteger &a, BigInteger &b);
 

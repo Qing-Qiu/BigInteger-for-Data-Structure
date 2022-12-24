@@ -83,7 +83,7 @@ int main() {
             }
             BigInteger a(s), b(t);
             clock_t startTime = clock();
-            BigInteger res = BigInteger::mul(a, b);
+            BigInteger res = BigInteger::exmul(a, b);
             clock_t endTime = clock();
             res.displayLen(io);
             if (io == "1")
@@ -91,7 +91,7 @@ int main() {
             else res.fileDisplay();
             cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
             startTime = clock();
-            res = BigInteger::exmul(a, b);
+            res = BigInteger::mul(a, b);
             endTime = clock();
             res.displayLen(io);
             if (io == "1")
@@ -146,7 +146,7 @@ int main() {
                 continue;
             } else {
                 clock_t startTime = clock();
-                BigInteger res = BigInteger::exp(a, b);
+                BigInteger res = BigInteger::exexp(a, b);
                 clock_t endTime = clock();
                 cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
                 res.displayLen(io);
@@ -154,7 +154,7 @@ int main() {
                     res.display();
                 else res.fileDisplay();
                 startTime = clock();
-                res = BigInteger::exexp(c, d);
+                res = BigInteger::exp(c, d);
                 endTime = clock();
                 cout << "Running time: " << static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC * 1000 << "ms\n";
                 res.displayLen(io);

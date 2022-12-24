@@ -30,8 +30,13 @@ void BigInteger::swap(BigInteger &a, BigInteger &b) {
     }
 }
 
-BigInteger BigInteger::add(const BigInteger &a, const BigInteger &b) {
+BigInteger BigInteger::add(BigInteger &a, BigInteger &b) {
     BigInteger res = *new BigInteger();
+    int lenA = a.data.size(), lenB = b.data.size();
+    for (int i = 0; i < lenA - lenB; i++)
+        b.data.push_front(0);
+    for (int i = 0; i < lenB - lenA; i++)
+        a.data.push_front(0);
     int carry = 0;
     auto p1 = a.data.tail->prev, p2 = b.data.tail->prev;
     for (int i = 0; i < a.data.size(); i++) {
@@ -44,6 +49,11 @@ BigInteger BigInteger::add(const BigInteger &a, const BigInteger &b) {
 
 std::pair<char, BigInteger> BigInteger::sub(BigInteger &a, BigInteger &b) {
     char sgn;
+    int lenA = a.data.size(), lenB = b.data.size();
+    for (int i = 0; i < lenA - lenB; i++)
+        b.data.push_front(0);
+    for (int i = 0; i < lenB - lenA; i++)
+        a.data.push_front(0);
     int comp = cmp(a, b);
     if (comp == -1) {
         swap(a, b);
